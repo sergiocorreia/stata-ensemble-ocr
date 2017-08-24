@@ -1,23 +1,43 @@
+*! version 1.0.0 24aug2017
+
 program ensemble_ocr
     syntax varlist(numeric min=2) [if] [in], GENerate(name)
     confirm new variable `generate'
     marksample touse
-    //mata: data = strofreal(st_data(., "`varlist'", "`touse'"), "%20.0f")
-    //mata: ans = ensemble(data)
-    //mata: strtoreal(ans)
-    mata: st_store(., st_addvar("double", "`generate'", 1), strtoreal(ensemble(strofreal(st_data(., "`varlist'", "`touse'"), "%20.0f"))))
-
-    // TODO:
-    // - fail if there are more digits than precision in a double
+    mata: ensemble_and_store("`varlist'", "`touse'", "`generate'")
 end
 
 
+// Include type definitions
 findfile "ftools_type_aliases.mata"
 include "`r(fn)'"
-//mata: mata set matastrict on
+
 
 mata:
+`Void' ensemble_and_store(`String' vars, `String' touse, `String' newvar)
+{
+    `StringMatrix' data
+    `Vector' ans
+    data = strofreal(st_data(., "`varlist'", "`touse'"), "%20.0f")
+    ans = strtoreal(ensemble(data))
+    st_store(., st_addvar("double", "`generate'", 1), ans)
+}
 
+
+// Returns an entire column, from a matrix
+`StringVector' ensemble(`StringMatrix' data)
+{
+    `Integer' n, i
+    `StringVector' ans
+    n = rows(data)
+    ans = J(n, 1, "")
+    for (i=1; i<=n; i++) {
+        ans[i] = ensemble_one(data[i, .])
+    }
+    return(ans)
+}
+
+// Returns a single string
 `String' ensemble_one(`StringRowVector' words)
 {
     `Boolean' ok, is_tie
@@ -106,19 +126,6 @@ mata:
     }
 
     return(offset + pos)
-}
-
-
-`StringVector' ensemble(`StringMatrix' data)
-{
-    `Integer' n, i
-    `StringVector' ans
-    n = rows(data)
-    ans = J(n, 1, "")
-    for (i=1; i<=n; i++) {
-        ans[i] = ensemble_one(data[i, .])
-    }
-    return(ans)
 }
 
 end
