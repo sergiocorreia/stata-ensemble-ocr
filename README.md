@@ -35,7 +35,7 @@ Note: this approach is similar in spirit to several papers by [WB Lundt](https:/
 ## Installation
 
 ```stata
-net install ensemble_ocr, from(https://github.com/sergiocorreia/ensemble_ocr/raw/master/)
+net install ensemble_ocr, from(https://github.com/sergiocorreia/stata-ensemble-ocr/raw/master/)
 ```
 
 
