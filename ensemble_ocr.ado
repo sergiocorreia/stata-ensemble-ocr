@@ -20,7 +20,7 @@ mata:
     `Vector' ans
     data = strofreal(st_data(., varlist, touse), "%20.0f")
     ans = strtoreal(ensemble(data))
-    st_store(., st_addvar("double", newvar, 1), ans)
+    st_store(., st_addvar("double", newvar, 1), touse, ans)
 }
 
 
