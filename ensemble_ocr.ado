@@ -14,13 +14,13 @@ include "`r(fn)'"
 
 
 mata:
-`Void' ensemble_and_store(`String' vars, `String' touse, `String' newvar)
+`Void' ensemble_and_store(`String' varlist, `String' touse, `String' newvar)
 {
     `StringMatrix' data
     `Vector' ans
-    data = strofreal(st_data(., "`varlist'", "`touse'"), "%20.0f")
+    data = strofreal(st_data(., varlist, touse), "%20.0f")
     ans = strtoreal(ensemble(data))
-    st_store(., st_addvar("double", "`generate'", 1), ans)
+    st_store(., st_addvar("double", newvar, 1), ans)
 }
 
 
