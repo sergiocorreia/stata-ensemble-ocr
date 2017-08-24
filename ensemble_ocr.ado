@@ -3,8 +3,11 @@
 program ensemble_ocr
     syntax varlist(numeric min=2) [if] [in], GENerate(name)
     confirm new variable `generate'
-    marksample touse
+    marksample touse, novarlist
     mata: ensemble_and_store("`varlist'", "`touse'", "`generate'")
+    gettoken var varlist : varlist, bind
+    loc format : format `var'
+    format `format' `generate'
 end
 
 
@@ -20,7 +23,7 @@ mata:
     `Vector' ans
     data = strofreal(st_data(., varlist, touse), "%20.0f")
     ans = strtoreal(ensemble(data))
-    st_store(., st_addvar("double", newvar, 1), touse, ans)
+    st_store(., st_addvar("double", newvar, 0), touse, ans)
 }
 
 
@@ -47,7 +50,11 @@ mata:
     `Matrix' chars
     `RowVector' ans
 
+    // Missing values are stored as a dot; remove them
+    words = select(words, words :!= ".")
     n = cols(words)
+    if (n<=1) return("") // no data or only one candidate
+
     lengths = strlen(words)
     k = mode(lengths)
 
