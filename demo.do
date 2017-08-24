@@ -1,0 +1,18 @@
+clear all
+set more off
+cls
+
+input long x1 x2 x3 x4
+12345 12340 2345 22345
+3490219 3409210 3490210 3499249
+911 917 811 971
+12345 12340 2345 54637
+12345 12340 2345 26572566
+12345 12340 2345 2
+end
+
+ensemble_ocr x* , gen(y)
+
+format %15.0f x* y
+list, sep(0)
+exit

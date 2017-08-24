@@ -1,0 +1,3 @@
+v 3
+d Sergio Correia (sergio.correia@gmail.com)
+p ensemble_ocr ENSEMBLE_OCR - Stata package that combines OCR-generated variables into a new one with fewer errors

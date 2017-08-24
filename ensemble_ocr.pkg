@@ -1,0 +1,18 @@
+v 3
+
+d ensemble_ocr. Combine OCR-generated variables into a new one with fewer errors
+d
+d Author: Sergio Correia.
+d Support: sergio.correia@gmail.com
+d
+d KW: ensemble
+d KW: ocr
+d
+d Requires: Stata version 11.2
+d
+d Requires: ftools package
+d
+d Distribution-Date: 20170824
+d
+
+f ensemble_ocr.ado
